@@ -7,7 +7,7 @@ exports[`Keyboard component renders correctly 1`] = `
   ellipsizeMode="tail"
   style={
     Object {
-      "color": "rgb(255,255,255)",
+      "color": "#ffffff",
       "fontFamily": "montserrat",
       "fontSize": 18,
       "textAlign": "center",
