@@ -9,9 +9,9 @@ import AppNavigation from './app-navigation'
 
 // here is our redux-aware our smart component
 function ReduxNavigation(props) {
-  const middleware = createReactNavigationReduxMiddleware('root', state => state.nav)
-  const addListener = createReduxBoundAddListener('root')
   const { dispatch, nav } = props
+  const middleware = createReactNavigationReduxMiddleware('root', state => nav)
+  const addListener = createReduxBoundAddListener('root')
   const navigation = ReactNavigation.addNavigationHelpers({
     dispatch,
     state: nav,
