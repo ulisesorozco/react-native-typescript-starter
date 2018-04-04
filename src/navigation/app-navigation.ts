@@ -1,7 +1,11 @@
 import { Animated, Easing } from 'react-native'
-import { StackNavigator } from 'react-navigation'
-import Launch from '../containers/launch'
-import Login from '../containers/login'
+import { DrawerNavigator, StackNavigator } from 'react-navigation'
+import { colors } from '../themes'
+import LoginScreen from '../containers/login'
+import AreaScreen from '../containers/area'
+import MapScreen from '../containers/map'
+import TagScreen from '../containers/tag'
+import DrawerScreen from '../containers/drawer'
 
 const MyTransitionSpec = {
   duration: 500,
@@ -66,14 +70,8 @@ const TransitionConfiguration = () => {
 
 const AppNavigation = StackNavigator(
   {
-    launch: {
-      screen: Launch,
-      navigationOptions: {
-        header: null,
-      },
-    },
     login: {
-      screen: Login,
+      screen: LoginScreen,
       navigationOptions: {
         header: null,
       },
@@ -82,7 +80,7 @@ const AppNavigation = StackNavigator(
   {
     // Default config for all screens
     // headerMode: 'none',
-    initialRouteName: 'launch',
+    initialRouteName: 'login',
     mode: 'card',
     navigationOptions: {},
     transitionConfig: TransitionConfiguration,

@@ -1,35 +1,34 @@
 import * as React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import { NavigationParams } from 'react-navigation'
+import { NavigationScreenProps } from 'react-navigation'
 import { connect } from 'react-redux'
 import AppActions from '../../actions/app'
-import * as screenStyles from './launch.styles'
+import * as screenStyles from './tag.styles'
 
-export interface LaunchScreenProps {
-  navigation: NavigationParams
+export interface TagScreenProps extends NavigationScreenProps {
   status: boolean
   loginRequest?: () => void
 }
 
-export interface LaunchScreenState {
+export interface TagScreenState {
   isBusy: boolean
 }
 
-class Launch extends React.Component<LaunchScreenProps, LaunchScreenState> {
+class TagScreen extends React.Component<TagScreenProps, TagScreenState> {
   constructor(props) {
     super(props)
     this.state = { isBusy: false }
   }
 
-  toLogin = () => {
-    this.props.navigation.navigate('login')
+  toMap = () => {
+    this.props.navigation.navigate('map')
   }
 
   render() {
     return (
       <View style={screenStyles.ROOT}>
-        <TouchableOpacity onPress={this.toLogin}>
-          <Text>TO LOGIN</Text>
+        <TouchableOpacity onPress={this.toMap}>
+          <Text>TO MAP</Text>
         </TouchableOpacity>
       </View>
     )
@@ -44,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
   loginRequest: () => dispatch(AppActions.loginRequest()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Launch)
+export default connect(mapStateToProps, mapDispatchToProps)(TagScreen)

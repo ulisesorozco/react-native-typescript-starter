@@ -1,8 +1,16 @@
+const colorWithAlpha = (color: string, alpha: string): string => `${color}${alpha}`
+
 const colors = {
-  black: 'rgb(0,0,0)',
-  transparent: 'rgba(0,0,0,0.0)',
-  warmGrey: 'rgb(151,151,151)',
-  white: 'rgb(255,255,255)',
+  lightGray: '#aaaaaa',
+  logoBlue: '#00A9E0',
+  logoGray: '#505050',
+  statusBlue: '#0074D9',
+  statusGreen: '#2ECC40',
+  statusGreenAlpha50: colorWithAlpha('#2ECC40', '80'),
+  statusRed: '#FF4136',
+  statusYellow: '#FFDC00',
+  white: '#ffffff',
+  nearlyWhite: '#f8f8f8',
 }
 
 export default colors

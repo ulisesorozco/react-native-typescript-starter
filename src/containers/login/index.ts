@@ -1,2 +1,2 @@
-import Login from './login'
-export default Login
+import LoginScreen from './login'
+export default LoginScreen
