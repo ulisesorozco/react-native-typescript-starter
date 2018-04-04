@@ -1,0 +1,79 @@
+{
+  "name": "Tag",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "compile": "tsc --noEmit -p .",
+    "precommit": "lint-staged",
+    "prepush": "yarn test",
+    "format": "yarn -s format:js && yarn -s format:ts && yarn -s format:json",
+    "format:js": "prettier --write {.,**}/*.js",
+    "format:json": "prettier --write {.,**}/*.json",
+    "format:ts": "prettier --write **/*.{ts,tsx} && tslint --fix -p tsconfig.json",
+    "lint": "yarn -s lint:ts",
+    "lint:ts": "tslint -p tsconfig.json",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^16.3.0-alpha.0",
+    "react-native": "0.55.0"
+  },
+  "devDependencies": {
+    "babel-jest": "22.4.3",
+    "babel-preset-react-native": "4.0.0",
+    "husky": "^0.14.3",
+    "jest": "22.4.3",
+    "jest-preset-typescript-react-native": "^1.2.0",
+    "lint-staged": "^7.0.3",
+    "prettier": "^1.11.1",
+    "react-native-typescript-transformer": "^1.2.4",
+    "react-test-renderer": "^16.3.0-alpha.0",
+    "solidarity": "^2.0.5",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "preset": "jest-preset-typescript-react-native",
+    "setupFiles": [
+      "<rootDir>/node_modules/react-native/jest/setup.js",
+      "./test/setup.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|react-navigation)"
+    ]
+  },
+  "lint-staged": {
+    "concurrent": false,
+    "subTaskConcurrency": 1,
+    "linters": {
+      "*.{ts,tsx}": [
+        "prettier --write",
+        "tslint --fix -p tsconfig.json",
+        "git add"
+      ]
+    }
+  },
+  "config": {},
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "describe",
+      "test",
+      "jest",
+      "expect",
+      "fetch",
+      "navigator",
+      "__DEV__",
+      "XMLHttpRequest",
+      "FormData",
+      "React$Element"
+    ]
+  }
+}
