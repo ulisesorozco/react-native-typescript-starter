@@ -28,7 +28,7 @@ class AreaScreen extends React.Component<AreaScreenProps, AreaScreenState> {
     return (
       <View style={screenStyles.ROOT}>
         <TouchableOpacity onPress={this.toMap}>
-          <Text>TO LOGIN</Text>
+          <Text>AREA SCREEN</Text>
         </TouchableOpacity>
       </View>
     )

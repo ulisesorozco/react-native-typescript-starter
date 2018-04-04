@@ -1,5 +1,5 @@
 import { Animated, Easing } from 'react-native'
-import { DrawerNavigator, StackNavigator } from 'react-navigation'
+import { DrawerNavigator, StackNavigator, NavigationRouteConfig } from 'react-navigation'
 import { colors } from '../themes'
 import LoginScreen from '../containers/login'
 import AreaScreen from '../containers/area'
@@ -68,23 +68,30 @@ const TransitionConfiguration = () => {
   }
 }
 
-const AppNavigation = StackNavigator(
-  {
-    login: {
-      screen: LoginScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
-  },
-  {
-    // Default config for all screens
-    // headerMode: 'none',
-    initialRouteName: 'login',
-    mode: 'card',
+const routes = {
+  mapScreen: {
+    screen: MapScreen,
     navigationOptions: {},
-    transitionConfig: TransitionConfiguration,
+  } as NavigationRouteConfig<any>,
+  areaScreen: {
+    screen: AreaScreen,
+    navigationOptions: {},
+  } as NavigationRouteConfig<any>,
+  tagScreen: {
+    screen: TagScreen,
+    navigationOptions: {},
+  } as NavigationRouteConfig<any>,
+}
+
+const AppNavigation = DrawerNavigator(routes, {
+  contentComponent: DrawerScreen,
+  initialRouteName: 'mapScreen',
+  backBehavior: 'none',
+  contentOptions: {
+    activeTintColor: colors.white,
+    inactiveTintColor: colors.lightGray,
   },
-)
+  navigationOptions: {},
+})
 
 export default AppNavigation

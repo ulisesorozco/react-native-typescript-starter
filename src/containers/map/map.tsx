@@ -21,14 +21,14 @@ class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
   }
 
   toArea = () => {
-    this.props.navigation.navigate('areas')
+    this.props.navigation.navigate('areaScreen')
   }
 
   render() {
     return (
       <View style={screenStyles.ROOT}>
         <TouchableOpacity onPress={this.toArea}>
-          <Text>TO AREA</Text>
+          <Text>MAP SCREEN</Text>
         </TouchableOpacity>
       </View>
     )

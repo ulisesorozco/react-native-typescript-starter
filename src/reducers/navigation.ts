@@ -1,7 +1,7 @@
 import AppNavigation from '../navigation/app-navigation'
 
 const initialState = AppNavigation.router.getStateForAction(
-  AppNavigation.router.getActionForPathAndParams('launch'),
+  AppNavigation.router.getActionForPathAndParams('mapScreen'),
 )
 
 export const reducer = (state, action) => {

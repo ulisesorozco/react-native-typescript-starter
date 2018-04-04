@@ -21,14 +21,14 @@ class TagScreen extends React.Component<TagScreenProps, TagScreenState> {
   }
 
   toMap = () => {
-    this.props.navigation.navigate('map')
+    this.props.navigation.navigate('mapScreen')
   }
 
   render() {
     return (
       <View style={screenStyles.ROOT}>
         <TouchableOpacity onPress={this.toMap}>
-          <Text>TO MAP</Text>
+          <Text>TAG SCREEN</Text>
         </TouchableOpacity>
       </View>
     )
