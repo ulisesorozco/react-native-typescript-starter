@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect } from 'react-redux'
+import MapView from 'react-native-maps'
 import AppActions from '../../actions/app'
 import * as screenStyles from './map.styles'
 
@@ -30,6 +31,18 @@ class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
         <TouchableOpacity onPress={this.toArea}>
           <Text>MAP SCREEN</Text>
         </TouchableOpacity>
+        <MapView
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          style={{
+            width: 300,
+            height: 500,
+          }}
+        />
       </View>
     )
   }
