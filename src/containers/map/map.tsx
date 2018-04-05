@@ -1,13 +1,43 @@
 import * as React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { StatusBar, Text, TouchableOpacity, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect } from 'react-redux'
+import { equals } from 'ramda'
 import MapView from 'react-native-maps'
+import { InputBar, SlideDown } from '../../components'
 import AppActions from '../../actions/app'
+import Map from './map.content'
+import {
+  Area,
+  AreaChanges,
+  Dispatch,
+  Region,
+  MapMode,
+  MapType,
+  PressEvent,
+  State,
+  Tag,
+} from '../../config/types'
+import { inputBarHeight } from '../../themes/metrics'
 import * as screenStyles from './map.styles'
 
 export interface MapScreenProps extends NavigationScreenProps {
-  status: boolean
+  area?: Area
+  areas: Area[]
+  lastRegion?: Region
+  mapType?: MapType
+  mode: MapMode
+  areaChanges?: AreaChanges
+  areaChangesName?: string
+  tag?: Tag
+  status?: boolean
+  navigateToArea?: (area: Area) => void
+  navigateToTag?: (tag: Tag) => void
+  modifyAreaCoordinate?: (PressEventHandler: number) => void
+  onAreaNameChanged?: (name: string) => void
+  onLongPress?: (PressEventHandler: MapScreen) => void
+  onPress?: (PressEventHandler: MapScreen) => void
+  saveRegion?: (region: Region) => void
   loginRequest?: () => void
 }
 
@@ -21,27 +51,40 @@ class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
     this.state = { isBusy: false }
   }
 
-  toArea = () => {
-    this.props.navigation.navigate('areaScreen')
+  inputBarPlaceholder = (mode: MapMode) => {
+    if (equals(mode, 'edit')) {
+      return 'Edit area'
+    }
+    return 'New area'
   }
 
   render() {
     return (
       <View style={screenStyles.ROOT}>
-        <TouchableOpacity onPress={this.toArea}>
-          <Text>MAP SCREEN</Text>
-        </TouchableOpacity>
-        <MapView
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          style={{
-            width: 300,
-            height: 500,
-          }}
+        <StatusBar />
+        {(equals(this.props.mode, 'create') || equals(this.props.mode, 'edit')) && (
+          <SlideDown height={inputBarHeight}>
+            <InputBar
+              onChangeText={this.props.onAreaNameChanged}
+              placeholder={this.inputBarPlaceholder(this.props.mode)}
+              value={this.props.areaChangesName}
+            />
+          </SlideDown>
+        )}
+        <Map
+          area={this.props.area}
+          areas={this.props.areas}
+          lastRegion={this.props.lastRegion}
+          mapType={this.props.mapType}
+          mode={this.props.mode}
+          navigateToArea={this.props.navigateToArea}
+          navigateToTag={this.props.navigateToTag}
+          areaChanges={this.props.areaChanges}
+          modifyAreaCoordinate={this.props.modifyAreaCoordinate}
+          onLongPress={this.props.onLongPress}
+          onPress={this.props.onPress}
+          saveRegion={this.props.saveRegion}
+          tag={this.props.tag}
         />
       </View>
     )

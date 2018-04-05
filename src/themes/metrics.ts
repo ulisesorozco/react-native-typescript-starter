@@ -1,8 +1,8 @@
-export const baseFontSize = 16
-export const typeScale = [3, 2.25, 1.5, 1.25, 1, 0.875, 0.75]
-export const baseSpacingUnit = baseFontSize
+const baseFontSize = 16
+const typeScale = [3, 2.25, 1.5, 1.25, 1, 0.875, 0.75]
+const baseSpacingUnit = baseFontSize
 
-export const fontSize = {
+const fontSize = {
   one: baseFontSize * typeScale[0],
   two: baseFontSize * typeScale[1],
   three: baseFontSize * typeScale[2],
@@ -13,7 +13,7 @@ export const fontSize = {
 }
 
 // Spacing scale after
-export const spacing = {
+const spacing = {
   zero: 0,
   one: baseSpacingUnit * 0.25,
   two: baseSpacingUnit * 0.5,
@@ -25,17 +25,33 @@ export const spacing = {
 }
 
 // View-specific values
-export const modificationMarkerSize = 20
+const modificationMarkerSize = 20
 
-export const inputBarPadding = spacing.three
-export const inputBarLabelFontSize = fontSize.six
-export const inputBarTextFieldPadding = spacing.two
-export const inputBarTextFieldBottomPadding = spacing.zero
-export const inputBarTextFieldBorderBottomWidth = 1
-export const inputBarTextFieldFontSize = fontSize.three
-export const inputBarHeight =
+const inputBarPadding = spacing.three
+const inputBarLabelFontSize = fontSize.six
+const inputBarTextFieldPadding = spacing.two
+const inputBarTextFieldBottomPadding = spacing.zero
+const inputBarTextFieldBorderBottomWidth = 1
+const inputBarTextFieldFontSize = fontSize.three
+const inputBarHeight =
   inputBarTextFieldFontSize +
   2 * inputBarPadding +
   inputBarTextFieldBorderBottomWidth +
   inputBarTextFieldBottomPadding +
   spacing.one // fudge factor
+
+export default {
+  baseFontSize,
+  typeScale,
+  baseSpacingUnit,
+  fontSize,
+  spacing,
+  modificationMarkerSize,
+  inputBarPadding,
+  inputBarLabelFontSize,
+  inputBarTextFieldPadding,
+  inputBarTextFieldBottomPadding,
+  inputBarTextFieldBorderBottomWidth,
+  inputBarTextFieldFontSize,
+  inputBarHeight,
+}
