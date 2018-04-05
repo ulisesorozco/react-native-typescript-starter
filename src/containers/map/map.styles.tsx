@@ -5,3 +5,7 @@ export const ROOT: ViewStyle = {
   alignItems: 'center',
   justifyContent: 'center',
 }
+
+export const map: ViewStyle = {
+  flex: 1,
+}

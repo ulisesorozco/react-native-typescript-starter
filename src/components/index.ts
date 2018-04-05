@@ -1,3 +1,4 @@
+import MapContent from './map-content'
 import { Text, KeyboardSpacer } from './shared'
 
-export { Text, KeyboardSpacer }
+export { MapContent, Text, KeyboardSpacer }
