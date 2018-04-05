@@ -1,3 +1,7 @@
+import { Dimensions } from 'react-native'
+
+const screenWidth = Dimensions.get('window').width
+const screenHeight = Dimensions.get('window').height
 const baseFontSize = 16
 const typeScale = [3, 2.25, 1.5, 1.25, 1, 0.875, 0.75]
 const baseSpacingUnit = baseFontSize
@@ -54,4 +58,6 @@ export default {
   inputBarTextFieldBorderBottomWidth,
   inputBarTextFieldFontSize,
   inputBarHeight,
+  screenWidth,
+  screenHeight,
 }

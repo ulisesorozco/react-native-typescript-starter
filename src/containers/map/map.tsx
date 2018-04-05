@@ -46,6 +46,17 @@ export interface MapScreenState {
 }
 
 class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
+  public static defaultProps: Partial<MapScreenProps> = {
+    mode: 'default',
+    navigateToArea: (e: Area) => {},
+    navigateToTag: (e: Tag) => {},
+    modifyAreaCoordinate: (e: number) => {},
+    onAreaNameChanged: (e: string) => {},
+    onLongPress: (e: MapScreen) => {},
+    onPress: (e: MapScreen) => {},
+    saveRegion: (e: Region) => {},
+  }
+
   constructor(props) {
     super(props)
     this.state = { isBusy: false }
