@@ -85,7 +85,7 @@ const routes = {
 
 const AppNavigation = DrawerNavigator(routes, {
   contentComponent: DrawerScreen,
-  initialRouteName: 'mapScreen',
+  initialRouteName: 'areaScreen',
   backBehavior: 'none',
   contentOptions: {
     activeTintColor: colors.white,
