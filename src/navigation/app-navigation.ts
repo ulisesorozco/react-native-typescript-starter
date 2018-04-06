@@ -71,21 +71,30 @@ const TransitionConfiguration = () => {
 const routes = {
   mapScreen: {
     screen: MapScreen,
-    navigationOptions: {},
-  } as NavigationRouteConfig<any>,
+    navigationOptions: {
+      headerMode: 'screen',
+      title: 'MAP',
+    },
+  },
   areaScreen: {
     screen: AreaScreen,
-    navigationOptions: {},
-  } as NavigationRouteConfig<any>,
+    navigationOptions: {
+      headerMode: 'screen',
+      title: 'AREA',
+    },
+  },
   tagScreen: {
     screen: TagScreen,
-    navigationOptions: {},
-  } as NavigationRouteConfig<any>,
+    navigationOptions: {
+      headerMode: 'screen',
+      title: 'TAG',
+    },
+  },
 }
 
 const AppNavigation = DrawerNavigator(routes, {
   contentComponent: DrawerScreen,
-  initialRouteName: 'areaScreen',
+  initialRouteName: 'tagScreen',
   backBehavior: 'none',
   contentOptions: {
     activeTintColor: colors.white,
@@ -94,4 +103,16 @@ const AppNavigation = DrawerNavigator(routes, {
   navigationOptions: {},
 })
 
-export default AppNavigation
+const RootNavigator = StackNavigator(
+  {
+    main: {
+      screen: AppNavigation,
+    },
+  },
+  {
+    headerMode: 'screen',
+    transitionConfig: TransitionConfiguration,
+  },
+)
+
+export default RootNavigator
