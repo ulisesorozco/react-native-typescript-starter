@@ -11,6 +11,7 @@ export const tagListItem: ViewStyle = {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: metrics.spacing.three,
+  width: metrics.screenWidth,
 }
 
 export const tagListItemIcon: ViewStyle = {

@@ -7,6 +7,7 @@ export const ROOT: ViewStyle = {
 
 export const listItem: ViewStyle = {
   padding: metrics.spacing.three,
+  width: metrics.screenWidth,
 }
 
 export const listItemText: TextStyle = {

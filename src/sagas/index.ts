@@ -5,12 +5,14 @@ import { takeLatest, all } from 'redux-saga/effects'
  */
 import { AppTypes } from '../actions/app'
 import { AreaTypes } from '../actions/area'
+import { TagTypes } from '../actions/tag'
 
 /**
  * Sagas
  */
 import { loginRequest } from './app'
 import { areasRequest } from './area'
+import { tagsRequest } from './tag'
 
 /**
  * API
@@ -28,5 +30,7 @@ export default function* root() {
     takeLatest(AppTypes.LOGIN_REQUEST, loginRequest, api),
     // Get areas
     takeLatest(AreaTypes.AREAS_REQUEST, areasRequest, api),
+    // Get tags
+    takeLatest(TagTypes.TAGS_REQUEST, tagsRequest, api),
   ])
 }

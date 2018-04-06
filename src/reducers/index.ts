@@ -9,6 +9,7 @@ export const reducers = combineReducers({
   nav: require('./navigation').reducer,
   app: require('./app').reducer,
   area: require('./area').reducer,
+  tag: require('./tag').reducer,
 })
 
 export default () => {

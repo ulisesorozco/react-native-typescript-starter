@@ -4,7 +4,7 @@ import { NavigationScreenProps } from 'react-navigation'
 import { connect } from 'react-redux'
 import { Tag } from '../../config/types'
 import { ItemSeparator, TagItem } from '../../components'
-import AppActions from '../../actions/app'
+import TagActions from '../../actions/tag'
 import * as screenStyles from './tag.styles'
 
 const keyExtractor = (item: Tag) => item.id
@@ -12,7 +12,7 @@ const keyExtractor = (item: Tag) => item.id
 export interface TagScreenProps extends NavigationScreenProps {
   data: Tag[]
   status: boolean
-  loginRequest?: () => void
+  tagsRequest?: () => void
   onPressItem?: (tag: Tag) => void
 }
 
@@ -26,8 +26,8 @@ class TagScreen extends React.Component<TagScreenProps, TagScreenState> {
     this.state = { isBusy: false }
   }
 
-  toMap = () => {
-    this.props.navigation.navigate('mapScreen')
+  componentDidMount() {
+    this.props.tagsRequest()
   }
 
   render() {
@@ -48,10 +48,11 @@ class TagScreen extends React.Component<TagScreenProps, TagScreenState> {
 
 const mapStateToProps = state => ({
   status: state.app.status,
+  data: state.tag.tags,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loginRequest: () => dispatch(AppActions.loginRequest()),
+  tagsRequest: () => dispatch(TagActions.tagsRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagScreen)

@@ -175,11 +175,26 @@ const activeBoundaryQuery = new Parse.Query(ParseActiveBoundary)
   .exists('updatedAt')
   .ascending('createdAt')
 
-const getActiveBoundaries = (): ThunkAction => {
-  return loadParseList(activeBoundaryQuery, (list: Array<any>, dispatch: Dispatch) => {
-    const tags: Array<Tag> = list.map(tagFromParse)
-    dispatch(dataActions.saveTags(tags))
-  })
+// Refactored
+const getActiveBoundaries = async () => {
+  const list = await activeBoundaryQuery
+    .find()
+    .then(response => response)
+    .catch(err => [])
+  let tags = list.map(tagFromParse)
+  tags = filter((area: any) => area.name && area.name.trim().length > 0, tags)
+  const ascComparator = comparator((a, b) => gt(prop('name', b), prop('name', a)))
+  tags = sort(ascComparator, tags)
+
+  if (equals(tags.length, 0)) {
+    return { ok: false, response: null }
+  }
+
+  return { ok: true, response: tags }
+  // return loadParseList(activeBoundaryQuery, (list: Array<any>, dispatch: Dispatch) => {
+  //   const tags: Array<Tag> = list.map(tagFromParse)
+  //   dispatch(dataActions.saveTags(tags))
+  // })
 }
 
 const subscribeToAreaUpdates = (): ThunkAction => {
