@@ -1,13 +1,19 @@
 import * as React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect } from 'react-redux'
-import AppActions from '../../actions/app'
+import { AreaItem, ItemSeparator } from '../../components'
+import AreaActions from '../../actions/area'
+import { Area, State } from '../../config/types'
 import * as screenStyles from './area.styles'
 
+const keyExtractor = (item: Area) => item.id
+
 export interface AreaScreenProps extends NavigationScreenProps {
+  areas: Area[]
   status: boolean
-  loginRequest?: () => void
+  areasRequest?: () => void
+  onPressItem?: (area: Area) => void
 }
 
 export interface AreaScreenState {
@@ -20,27 +26,33 @@ class AreaScreen extends React.Component<AreaScreenProps, AreaScreenState> {
     this.state = { isBusy: false }
   }
 
-  toMap = () => {
-    this.props.navigation.navigate('map')
+  componentDidMount() {
+    this.props.areasRequest()
   }
 
   render() {
     return (
       <View style={screenStyles.ROOT}>
-        <TouchableOpacity onPress={this.toMap}>
-          <Text>AREA SCREEN</Text>
-        </TouchableOpacity>
+        <FlatList
+          data={this.props.areas}
+          ItemSeparatorComponent={ItemSeparator}
+          keyExtractor={keyExtractor}
+          renderItem={({ item }) => {
+            return <AreaItem area={item} onPress={this.props.onPressItem} />
+          }}
+        />
       </View>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  status: state.app.status,
+  status: state.area.status,
+  areas: state.area.areas,
 })
 
 const mapDispatchToProps = dispatch => ({
-  loginRequest: () => dispatch(AppActions.loginRequest()),
+  areasRequest: () => dispatch(AreaActions.areasRequest()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AreaScreen)

@@ -1,7 +1,7 @@
 import { AsyncStorage, InteractionManager } from 'react-native'
 import Parse from 'parse/react-native'
+import { comparator, equals, filter, gt, prop, sort, toLower } from 'ramda'
 import { PARSE_APPLICATION_ID, PARSE_SERVER_URL, PARSE_EMAIL, PARSE_PASSWORD } from '../config/app'
-import { dataActions } from '../state/data'
 import { areaFromNameAndCoordinates } from '../utils/area'
 import {
   Action,
@@ -52,15 +52,33 @@ const loadParseList = (
 //   }
 // }
 
+// Refactored
 const ParseArea = Parse.Object.extend('Boundary')
-const getAreas = (): ThunkAction => {
-  return loadParseList(
-    new Parse.Query(ParseArea).limit(500),
-    (list: Array<any>, dispatch: Dispatch) => {
-      const areas = list.map(areaFromParse)
-      dispatch(dataActions.saveAreas(areas))
-    },
-  )
+const getAreas = async () => {
+  const query = new Parse.Query(ParseArea).limit(500)
+  const list = await query
+    .find()
+    .then(response => response)
+    .catch(err => [])
+  let areas = list.map(areaFromParse)
+  areas = filter((area: any) => area.name && area.name.trim().length > 0, areas)
+  const ascComparator = comparator((a, b) => gt(prop('name', b), prop('name', a)))
+  areas = sort(ascComparator, areas)
+
+  if (equals(areas.length, 0)) {
+    return { ok: false, response: null }
+  }
+
+  return { ok: true, response: areas }
+
+  // query.find().then((list: Array<any>)
+  // return loadParseList(
+  //   new Parse.Query(ParseArea).limit(500),
+  //   (list: Array<any>, dispatch: Dispatch) => {
+  //     const areas = list.map(areaFromParse)
+  //     console.log('$$$$$$$$$$$$: @@@@@@@@@@:  ', areas)
+  //   },
+  // )
 }
 
 // const getDevicesForUser = (): ThunkAction => {

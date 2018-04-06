@@ -1,13 +1,19 @@
 import * as React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 import { connect } from 'react-redux'
+import { Tag } from '../../config/types'
+import { ItemSeparator, TagItem } from '../../components'
 import AppActions from '../../actions/app'
 import * as screenStyles from './tag.styles'
 
+const keyExtractor = (item: Tag) => item.id
+
 export interface TagScreenProps extends NavigationScreenProps {
+  data: Tag[]
   status: boolean
   loginRequest?: () => void
+  onPressItem?: (tag: Tag) => void
 }
 
 export interface TagScreenState {
@@ -27,9 +33,14 @@ class TagScreen extends React.Component<TagScreenProps, TagScreenState> {
   render() {
     return (
       <View style={screenStyles.ROOT}>
-        <TouchableOpacity onPress={this.toMap}>
-          <Text>TAG SCREEN</Text>
-        </TouchableOpacity>
+        <FlatList
+          data={this.props.data}
+          ItemSeparatorComponent={ItemSeparator}
+          keyExtractor={keyExtractor}
+          renderItem={({ item }) => {
+            return <TagItem tag={item} onPress={this.props.onPressItem} />
+          }}
+        />
       </View>
     )
   }
