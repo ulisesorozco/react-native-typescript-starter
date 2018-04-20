@@ -1,37 +1,40 @@
-import { combineReducers } from 'redux'
-import { persistReducer } from 'redux-persist'
+import { createStore, combineReducers } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import configureStore from './createStore'
 import rootSaga from '../sagas'
-import ReduxPersist from '../config/redux-persist'
+import immutablePersistenceTransform from '../services/transform'
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['nav'],
+  transforms: [immutablePersistenceTransform],
+}
 
 /* ------------- Assemble The Reducers ------------- */
-export const reducers = combineReducers({
+const reducers = combineReducers({
   nav: require('./navigation').reducer,
   app: require('./app').reducer,
 })
 
-export default () => {
-  let finalReducers = reducers
-  // If rehydration is on use persistReducer otherwise default combineReducers
-  if (ReduxPersist.active) {
-    const persistConfig = ReduxPersist.storeConfig
-    finalReducers = persistReducer(persistConfig, reducers)
-  }
+const persistedReducer = persistReducer(persistConfig, reducers)
 
-  let { store, sagasManager, sagaMiddleware } = configureStore(finalReducers, rootSaga)
+let { store, sagasManager, sagaMiddleware } = configureStore(persistedReducer, rootSaga)
 
-  if (module.hot) {
-    module.hot.accept(() => {
-      const nextRootReducer = require('./').reducers
-      store.replaceReducer(nextRootReducer)
+if (module.hot) {
+  module.hot.accept(() => {
+    const nextRootReducer = require('./').reducers
+    store.replaceReducer(nextRootReducer)
 
-      const newYieldedSagas = require('../sagas').default
-      sagasManager.cancel()
-      sagasManager.done.then(() => {
-        sagasManager = sagaMiddleware.run(newYieldedSagas)
-      })
+    const newYieldedSagas = require('../sagas').default
+    sagasManager.cancel()
+    sagasManager.done.then(() => {
+      sagasManager = sagaMiddleware.run(newYieldedSagas)
     })
-  }
-
-  return store
+  })
 }
+
+let persistor = persistStore(store)
+
+export { store, persistor }

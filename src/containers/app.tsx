@@ -1,10 +1,8 @@
 import * as React from 'react'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import RootContainer from './root-container'
-import createStore from '../reducers'
-
-// create our store
-const store = createStore()
+import { store, persistor } from '../reducers'
 
 export interface Props {}
 
@@ -14,7 +12,9 @@ class App extends React.Component<Props, State> {
   render() {
     return (
       <Provider store={store}>
-        <RootContainer />
+        <PersistGate persistor={persistor}>
+          <RootContainer />
+        </PersistGate>
       </Provider>
     )
   }
