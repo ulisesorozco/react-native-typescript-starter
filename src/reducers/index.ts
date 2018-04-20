@@ -10,6 +10,7 @@ export const reducers = combineReducers({
   app: require('./app').reducer,
   area: require('./area').reducer,
   tag: require('./tag').reducer,
+  map: require('./map').reducer,
 })
 
 export default () => {

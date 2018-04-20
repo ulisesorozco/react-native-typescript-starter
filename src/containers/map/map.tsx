@@ -23,10 +23,10 @@ import * as screenStyles from './map.styles'
 
 export interface MapScreenProps extends NavigationScreenProps {
   area?: Area
-  areas: Area[]
+  areas?: Area[]
   lastRegion?: Region
   mapType?: MapType
-  mode: MapMode
+  mode?: MapMode
   areaChanges?: AreaChanges
   areaChangesName?: string
   tag?: Tag
@@ -104,6 +104,11 @@ class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
 
 const mapStateToProps = state => ({
   status: state.app.status,
+  area: state.map.area,
+  areas: state.map.areas,
+  areaChanges: state.map.areaChanges,
+  lastRegion: state.map.lastRegion,
+  mode: state.map.mode,
 })
 
 const mapDispatchToProps = dispatch => ({

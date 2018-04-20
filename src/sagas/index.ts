@@ -13,6 +13,7 @@ import { TagTypes } from '../actions/tag'
 import { loginRequest } from './app'
 import { areasRequest } from './area'
 import { tagsRequest } from './tag'
+import { navigationRequest } from './map'
 
 /**
  * API
@@ -32,5 +33,7 @@ export default function* root() {
     takeLatest(AreaTypes.AREAS_REQUEST, areasRequest, api),
     // Get tags
     takeLatest(TagTypes.TAGS_REQUEST, tagsRequest, api),
+    // Navigation handler
+    takeLatest('Navigation/NAVIGATE', navigationRequest, api),
   ])
 }
