@@ -1,6 +1,4 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import Rehydration from '../services/rehydration'
-import ReduxPersist from '../config/redux-persist'
 import createSagaMiddleware from 'redux-saga'
 
 // creates the store
@@ -25,11 +23,6 @@ export default (rootReducer, rootSaga) => {
 
   const createAppropriateStore = createStore
   const store = createAppropriateStore(rootReducer, compose(...enhancers))
-
-  // configure persistStore and check reducer version number
-  if (ReduxPersist.active) {
-    Rehydration.updateReducers(store)
-  }
 
   // kick off root saga
   let sagasManager = sagaMiddleware.run(rootSaga)
